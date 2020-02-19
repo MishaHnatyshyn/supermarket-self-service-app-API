@@ -4,8 +4,12 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  BaseEntity, ManyToOne, JoinColumn, OneToMany,
+  BaseEntity,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
 } from 'typeorm';
+import Product from '../product/product.entity';
 
 @Entity()
 export default class Category extends BaseEntity {
@@ -18,12 +22,15 @@ export default class Category extends BaseEntity {
   @Column()
   parent_category_id: number;
 
-  @ManyToOne(type => Category, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Category, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'create_by_id' })
   parent_category: Category;
 
-  @OneToMany(type => Category, category => category.parent_category)
+  @OneToMany(() => Category, category => category.parent_category)
   subcategories: Category[];
+
+  @OneToMany(() => Product, product => product.category)
+  products: Product[];
 
   @CreateDateColumn()
   created_at: string;
