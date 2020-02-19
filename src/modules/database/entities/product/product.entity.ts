@@ -4,11 +4,12 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
   ManyToOne,
-  JoinColumn,
+  JoinColumn, OneToMany,
 } from 'typeorm';
 import Producer from '../producer/producer.entity';
 import Category from '../category/category.entity';
 import UnitOfMeasure from './unit-of-measure.entity';
+import ProductCharacteristic from '../product-characteristic/product-characteristic.entity';
 
 @Entity()
 export default class Product extends BaseEntity {
@@ -41,6 +42,9 @@ export default class Product extends BaseEntity {
   @ManyToOne(() => UnitOfMeasure)
   @JoinColumn({ name: 'unit_of_measure_id' })
   unit_of_measure: UnitOfMeasure;
+
+  @OneToMany(() => ProductCharacteristic, characteristic => characteristic.product)
+  characteristics: ProductCharacteristic[];
 
   @Column()
   price: number;
