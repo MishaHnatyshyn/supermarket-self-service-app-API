@@ -19,4 +19,15 @@ export default class UserRepositoryService extends BaseRepositoryService<User> {
       select: ['id', 'email', 'password'],
     });
   }
+
+  create(email, password): Promise<User> {
+    const user = new User();
+    user.password = password;
+    user.email = email;
+    return this.userRepository.save(user);
+  }
+
+  getUserByEmail(email): Promise<User> {
+    return this.findOne({ email });
+  }
 }

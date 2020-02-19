@@ -1,4 +1,4 @@
-import { Controller, Request, Post, UseGuards } from '@nestjs/common';
+import {Controller, Request, Post, UseGuards, Body} from '@nestjs/common';
 import AuthService from './services/auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import {ApiUseTags, ApiImplicitBody, ApiOkResponse} from '@nestjs/swagger';
@@ -16,5 +16,12 @@ export default class AuthController {
   @Post('/login')
   async login(@Request() req) {
     return this.authService.login(req.user);
+  }
+
+  @ApiOkResponse({ type: LoginResponseObject })
+  @ApiImplicitBody({ name: 'LoginDto', type: LoginDto })
+  @Post('/signup')
+  async signup(@Body() data: LoginDto) {
+    return this.authService.signup(data);
   }
 }
