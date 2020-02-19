@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import UserRepositoryService from './user-repository.service';
-import User from '../../database/entities/user.entity';
+import User from '../../database/entities/user/user.entity';
 import EmailUniquenessException from '../exceptions/email-uniqueness.exception';
 
 @Injectable()

@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import UserService from '../../user/services/user.service';
 import { UserJwtDto } from '../dto/user.jwt.dto';
-import User from '../../database/entities/user.entity';
+import User from '../../database/entities/user/user.entity';
 
 @Injectable()
 export default class UserStrategy extends PassportStrategy(Strategy, 'user') {

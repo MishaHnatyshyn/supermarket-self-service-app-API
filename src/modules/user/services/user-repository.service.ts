@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import BaseRepositoryService from '../../../shared/base-repository.service';
 import { USER_REPOSITORY } from '../../../constants';
-import User from '../../database/entities/user.entity';
+import User from '../../database/entities/user/user.entity';
 
 @Injectable()
 export default class UserRepositoryService extends BaseRepositoryService<User> {

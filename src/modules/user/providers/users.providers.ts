@@ -1,5 +1,5 @@
 import {Connection, Repository} from 'typeorm';
-import User from '../../database/entities/user.entity';
+import User from '../../database/entities/user/user.entity';
 import { DB_CONNECTION, USER_REPOSITORY } from '../../../constants';
 
 export default [
