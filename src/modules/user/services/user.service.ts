@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import UserRepositoryService from './user-repository.service';
 import User from '../../database/entities/user.entity';
 import EmailUniquenessException from '../exceptions/email-uniqueness.exception';
@@ -7,7 +7,7 @@ import EmailUniquenessException from '../exceptions/email-uniqueness.exception';
 export default class UserService {
   constructor(private readonly userRepositoryService: UserRepositoryService) {}
 
-  private async checkEmailUniqueness(email: string) {
+  private async checkEmailUniqueness(email: string): Promise<void> {
     const user = await this.userRepositoryService.getUserByEmail(email);
     if (user) {
       throw new EmailUniquenessException();

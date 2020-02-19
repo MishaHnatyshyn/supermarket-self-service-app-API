@@ -21,11 +21,11 @@ export default class BaseRepositoryService<Entity extends BaseEntity> {
     return this.repository.count(options);
   }
 
-  delete(matcher: object) {
+  delete(matcher: object): object {
     return this.repository.delete(matcher);
   }
 
-  update(matcher: number | object, updateData: object) {
+  update(matcher: number | object, updateData: object): object {
     return this.repository.update(matcher, updateData);
   }
 }

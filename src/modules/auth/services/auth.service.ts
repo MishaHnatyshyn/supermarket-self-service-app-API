@@ -3,7 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import User from '../../database/entities/user.entity';
 import CryptoService from './crypto.service';
 import UserService from '../../user/services/user.service';
-import {LoginDto} from '../dto/login.dto';
+import { LoginDto } from '../dto/login.dto';
+import {LoginResponseObject} from '../response-objects/login-response-object';
 
 @Injectable()
 export default class AuthService {
@@ -22,13 +23,14 @@ export default class AuthService {
     return isPassCorrect ? user : null;
   }
 
-  async signup({ email, password }: LoginDto) {
+  async signup({ email, password }: LoginDto): Promise<LoginResponseObject> {
     const passwordHash = await this.cryptoService.hashPassword(password);
     const user = await this.userService.createUser(email, passwordHash);
     return this.login(user);
   }
 
-  async login({ email, id }: User) {
+
+  login({ email, id }: User): LoginResponseObject {
     const payload = {
       id,
       email,

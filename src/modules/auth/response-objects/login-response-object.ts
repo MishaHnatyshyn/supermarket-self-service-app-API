@@ -1,4 +1,4 @@
-import {ApiResponseModelProperty} from '@nestjs/swagger';
+import { ApiResponseModelProperty } from '@nestjs/swagger';
 
 export class LoginResponseObject {
   @ApiResponseModelProperty()
