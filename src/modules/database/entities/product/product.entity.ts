@@ -4,12 +4,13 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
   ManyToOne,
-  JoinColumn, OneToMany,
+  JoinColumn, OneToMany, ManyToMany, JoinTable,
 } from 'typeorm';
 import Producer from '../producer/producer.entity';
 import Category from '../category/category.entity';
 import UnitOfMeasure from './unit-of-measure.entity';
 import ProductCharacteristic from '../product-characteristic/product-characteristic.entity';
+import Store from '../store/store.entity';
 
 @Entity()
 export default class Product extends BaseEntity {
@@ -45,6 +46,10 @@ export default class Product extends BaseEntity {
 
   @OneToMany(() => ProductCharacteristic, characteristic => characteristic.product)
   characteristics: ProductCharacteristic[];
+
+  @ManyToMany(() => Store, store => store.products)
+  @JoinTable()
+  stores: Store[];
 
   @Column()
   price: number;

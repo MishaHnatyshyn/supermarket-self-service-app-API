@@ -2,8 +2,9 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  BaseEntity,
+  BaseEntity, ManyToMany, JoinTable,
 } from 'typeorm';
+import Product from '../product/product.entity';
 
 @Entity()
 export default class Store extends BaseEntity {
@@ -12,4 +13,8 @@ export default class Store extends BaseEntity {
 
   @Column()
   name: string;
+
+  @ManyToMany(() => Product, product => product.stores)
+  @JoinTable()
+  products: Product[];
 }
