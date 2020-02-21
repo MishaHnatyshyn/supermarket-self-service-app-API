@@ -19,11 +19,11 @@ export default class Category extends BaseEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   parent_category_id: number;
 
   @ManyToOne(() => Category, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'create_by_id' })
+  @JoinColumn({ name: 'parent_category_id' })
   parent_category: Category;
 
   @OneToMany(() => Category, category => category.parent_category)

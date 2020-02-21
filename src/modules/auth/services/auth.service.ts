@@ -4,7 +4,7 @@ import User from '../../database/entities/user/user.entity';
 import CryptoService from './crypto.service';
 import UserService from '../../user/services/user.service';
 import { LoginDto } from '../dto/login.dto';
-import {LoginResponseObject} from '../response-objects/login-response-object';
+import { AccessTokenDto } from '../dto/access-token.dto';
 
 @Injectable()
 export default class AuthService {
@@ -23,14 +23,14 @@ export default class AuthService {
     return isPassCorrect ? user : null;
   }
 
-  async signup({ email, password }: LoginDto): Promise<LoginResponseObject> {
+  async signup({ email, password }: LoginDto): Promise<AccessTokenDto> {
     const passwordHash = await this.cryptoService.hashPassword(password);
     const user = await this.userService.createUser(email, passwordHash);
     return this.login(user);
   }
 
 
-  login({ email, id }: User): LoginResponseObject {
+  login({ email, id }: User): AccessTokenDto {
     const payload = {
       id,
       email,

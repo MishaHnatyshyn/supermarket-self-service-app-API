@@ -1,6 +1,6 @@
 import { ApiResponseModelProperty } from '@nestjs/swagger';
 
-export class LoginResponseObject {
+export class AccessTokenDto {
   @ApiResponseModelProperty()
   id: number;
 

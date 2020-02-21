@@ -25,4 +25,4 @@ import CryptoService from './services/crypto.service';
     CryptoService,
   ],
 })
-export class AuthModule {}
+export default class AuthModule {}
