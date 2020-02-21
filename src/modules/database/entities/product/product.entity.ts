@@ -11,6 +11,7 @@ import Category from '../category/category.entity';
 import UnitOfMeasure from './unit-of-measure.entity';
 import ProductCharacteristic from '../product-characteristic/product-characteristic.entity';
 import Store from '../store/store.entity';
+import Currency from './currency.entity';
 
 @Entity()
 export default class Product extends BaseEntity {
@@ -29,6 +30,13 @@ export default class Product extends BaseEntity {
   @ManyToOne(() => Producer)
   @JoinColumn({ name: 'producer_id' })
   producer: Producer;
+
+  @Column()
+  currency_id: number;
+
+  @ManyToOne(() => Currency)
+  @JoinColumn({ name: 'currency_id' })
+  currency: Currency;
 
   @Column()
   category_id: number;
