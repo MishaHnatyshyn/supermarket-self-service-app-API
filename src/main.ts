@@ -15,7 +15,7 @@ async function bootstrap(): Promise<void> {
     new FastifyAdapter({ logger: true }),
   );
   app.enableCors();
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: false }));
   const options = new DocumentBuilder()
     .setTitle('Self-service application')
     .setVersion('0.1')

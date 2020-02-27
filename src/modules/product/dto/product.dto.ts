@@ -30,6 +30,4 @@ export default class ProductDto {
   @ApiResponseModelProperty()
   characteristics: ProductCharacteristic[];
 
-  @ApiResponseModelProperty()
-  price: number;
 }

@@ -12,6 +12,7 @@ import UnitOfMeasure from './unit-of-measure.entity';
 import ProductCharacteristic from '../product-characteristic/product-characteristic.entity';
 import Store from '../store/store.entity';
 import Currency from './currency.entity';
+import ProductInStore from './product-in-store.entity';
 
 @Entity()
 export default class Product extends BaseEntity {
@@ -58,6 +59,9 @@ export default class Product extends BaseEntity {
   @ManyToMany(() => Store, store => store.products)
   @JoinTable()
   stores: Store[];
+
+  @OneToMany(() => ProductInStore, productInStore => productInStore.product)
+  range_in_store: ProductInStore[];
 
   @Column()
   price: number;
