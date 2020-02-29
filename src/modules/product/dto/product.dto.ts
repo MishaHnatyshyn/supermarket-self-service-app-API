@@ -4,6 +4,7 @@ import UnitOfMeasure from '../../database/entities/product/unit-of-measure.entit
 import Category from '../../database/entities/category/category.entity';
 import Currency from '../../database/entities/product/currency.entity';
 import Producer from '../../database/entities/producer/producer.entity';
+import ProductPhoto from '../../database/entities/product/product-photo.entity';
 
 export default class ProductDto {
   @ApiResponseModelProperty()
@@ -30,4 +31,6 @@ export default class ProductDto {
   @ApiResponseModelProperty()
   characteristics: ProductCharacteristic[];
 
+  @ApiResponseModelProperty()
+  photos: ProductPhoto[];
 }

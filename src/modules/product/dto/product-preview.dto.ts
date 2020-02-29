@@ -8,6 +8,9 @@ export default class ProductPreviewDto {
   name: string;
 
   @ApiResponseModelProperty()
+  photo: string;
+
+  @ApiResponseModelProperty()
   barcode: string;
 
   @ApiResponseModelProperty()

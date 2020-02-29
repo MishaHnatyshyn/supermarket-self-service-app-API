@@ -19,6 +19,7 @@ export default class SearchHelperService {
         name,
         barcode,
         quantity,
+        photo,
       } = product;
       return {
         id,
@@ -26,6 +27,7 @@ export default class SearchHelperService {
         price,
         barcode,
         quantity,
+        photo,
         unitOfMeasure: unit_of_measure,
         currency: currency_code,
       };

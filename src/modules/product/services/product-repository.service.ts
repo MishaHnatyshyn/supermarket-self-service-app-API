@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import {In, Like, Repository, MoreThanOrEqual, LessThanOrEqual} from 'typeorm';
+import {In, Like, Repository, MoreThanOrEqual, LessThanOrEqual, Between} from 'typeorm';
 import BaseRepositoryService from '../../../shared/base-repository.service';
 import {PRODUCT_CHARACTERISTIC_REPOSITORY, PRODUCT_REPOSITORY} from '../../../constants';
 import Product from '../../database/entities/product/product.entity';
@@ -25,6 +25,7 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
       relations: [
         'producer',
         'category',
+        'photos',
         'unit_of_measure',
         'characteristics',
         'characteristics.type',
@@ -54,6 +55,7 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
         '"product"."name" AS "name"',
         '"product"."barcode" AS "barcode"',
         '"product"."price" AS "price"',
+        '"photo"."url" AS "photo"',
         '"rangeInStore"."quantity" AS "quantity"',
         '"currency"."code" AS "currency_code"',
         '"category"."id" AS "category_id"',
@@ -81,6 +83,7 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
       .leftJoin('currency', 'currency', '"currency"."id"="product"."currency_id"')
       .leftJoin('category', 'category', '"category"."id"="product"."category_id"')
       .leftJoin('producer', 'producer', '"producer"."id"="product"."producer_id"')
+      .leftJoin('product_photo', 'photo', '"photo"."product_id"="product"."id" AND "photo"."is_main"=TRUE')
       .leftJoin('unit_of_measure', 'unit_of_measure', '"unit_of_measure"."id"="product"."unit_of_measure_id"')
       .limit(pageSize)
       .offset(skip)
@@ -92,11 +95,14 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
     const filters = [];
     // TODO: use 'otherFilters' in SQL query
     const { priceMin, priceMax, category, producer, ...otherFilters } = searchParams;
-    if (priceMin) {
+    if (priceMin && !priceMax) {
       filters.push({ price: MoreThanOrEqual(parseFloat(priceMin)) });
     }
-    if (priceMax) {
+    if (priceMax && !priceMin) {
       filters.push({ price: LessThanOrEqual(parseFloat(priceMax)) });
+    }
+    if (priceMax && priceMin) {
+      filters.push({ price: Between(parseFloat(priceMin), parseFloat(priceMax)) });
     }
     if (category) {
       filters.push({ category_id: In(category) });

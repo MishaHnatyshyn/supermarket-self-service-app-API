@@ -13,6 +13,7 @@ import ProductCharacteristic from '../product-characteristic/product-characteris
 import Store from '../store/store.entity';
 import Currency from './currency.entity';
 import ProductInStore from './product-in-store.entity';
+import ProductPhoto from './product-photo.entity';
 
 @Entity()
 export default class Product extends BaseEntity {
@@ -62,6 +63,9 @@ export default class Product extends BaseEntity {
 
   @OneToMany(() => ProductInStore, productInStore => productInStore.product)
   range_in_store: ProductInStore[];
+
+  @OneToMany(() => ProductPhoto, photo => photo.product)
+  photos: ProductPhoto[];
 
   @Column()
   price: number;

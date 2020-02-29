@@ -2,6 +2,7 @@ export default interface ProductSearchDbResponse {
   id: number;
   name: string;
   barcode: string;
+  photo: string;
   price: number;
   quantity: number;
   currency_code: string;
