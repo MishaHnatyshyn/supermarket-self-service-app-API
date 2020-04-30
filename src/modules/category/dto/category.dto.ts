@@ -7,6 +7,9 @@ export class CategoryTreeDto {
   @ApiResponseModelProperty()
   name: string;
 
-  @ApiResponseModelProperty({ type: [Number] })
-  subcategories: number[];
+  @ApiResponseModelProperty()
+  icon: string;
+
+  @ApiResponseModelProperty({ type: [CategoryTreeDto] })
+  subcategories: CategoryTreeDto[];
 }

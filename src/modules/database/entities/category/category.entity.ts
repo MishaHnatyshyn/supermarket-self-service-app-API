@@ -32,6 +32,9 @@ export default class Category extends BaseEntity {
   @OneToMany(() => Product, product => product.category)
   products: Product[];
 
+  @Column({ nullable: true })
+  icon: string;
+
   @CreateDateColumn()
   created_at: string;
 

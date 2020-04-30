@@ -16,7 +16,8 @@ export default class CategoryRepositoryService extends BaseRepositoryService<Cat
   getAll(): Promise<Category[]> {
     return this.categoryRepository.find({
       select: ['name', 'id'],
-      relations: ['subcategories'],
+      relations: ['subcategories', 'subcategories.subcategories'],
+      where: { parent_category_id: null },
       order: {
         name: 'ASC',
       },
