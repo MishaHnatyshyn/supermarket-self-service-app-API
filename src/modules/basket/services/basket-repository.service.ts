@@ -8,6 +8,7 @@ import Product from '../../database/entities/product/product.entity';
 import LineItemDetails from '../interfaces/line-item-details.interface';
 import { BasketStatus } from '../interfaces/status.enum';
 import { SelectQueryBuilder } from 'typeorm/query-builder/SelectQueryBuilder';
+import ProductPhoto from '../../database/entities/product/product-photo.entity';
 
 @Injectable()
 export default class BasketRepositoryService extends BaseRepositoryService<Basket> {
@@ -61,11 +62,14 @@ export default class BasketRepositoryService extends BaseRepositoryService<Baske
         'item.id as id',
         'product.id as product',
         'product.name as name',
+        'product.description as description',
         'product.price as price',
+        'photo.url as photo',
         'item.quantity as quantity',
         'product.price * item.quantity as sum',
       ])
-      .innerJoin(Product, 'product', 'product.id=item.product_id');
+      .innerJoin(Product, 'product', 'product.id=item.product_id')
+      .leftJoin(ProductPhoto, 'photo', 'product.id=photo.product_id AND photo.is_main = TRUE');
   }
 
   getBasketLineItemsDetails(basketId: number): Promise<LineItemDetails[]> {

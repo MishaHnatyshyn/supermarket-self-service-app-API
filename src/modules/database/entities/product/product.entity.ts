@@ -23,6 +23,9 @@ export default class Product extends BaseEntity {
   @Column()
   name: string;
 
+  @Column({ nullable: true })
+  description: string;
+
   @Column()
   barcode: string;
 
@@ -67,6 +70,6 @@ export default class Product extends BaseEntity {
   @OneToMany(() => ProductPhoto, photo => photo.product)
   photos: ProductPhoto[];
 
-  @Column()
+  @Column({ type: 'float' })
   price: number;
 }
