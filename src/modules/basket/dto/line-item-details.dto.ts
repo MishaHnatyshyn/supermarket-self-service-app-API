@@ -12,6 +12,12 @@ export default class LineItemDetailsDto implements LineItemDetails {
   name: string;
 
   @ApiResponseModelProperty()
+  description: string;
+
+  @ApiResponseModelProperty()
+  photo: string;
+
+  @ApiResponseModelProperty()
   price: number;
 
   @ApiResponseModelProperty()
