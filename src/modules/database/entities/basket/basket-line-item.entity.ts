@@ -16,7 +16,7 @@ export default class BasketLineItem extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'float', nullable: true })
   quantity: number;
 
   @Column({ nullable: true })
