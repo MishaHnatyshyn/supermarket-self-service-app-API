@@ -5,9 +5,13 @@ import BasketRepositoryService from './services/basket-repository.service';
 import BasketService from './services/basket.service';
 import BasketController from './controllers/basket.controller';
 import BasketLineItemController from './controllers/basket-line-item.controller';
+import ProductModule from '../product';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [
+    DatabaseModule,
+    ProductModule,
+  ],
   providers: [
     ...basketProviders,
     BasketRepositoryService,

@@ -1,14 +1,20 @@
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
-import { IsNumber, IsOptional } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export default class AddToBasketDto {
   @ApiModelProperty()
   @IsNumber()
   basketId: number;
 
-  @ApiModelProperty()
+  @ApiModelPropertyOptional()
+  @IsOptional()
   @IsNumber()
   productId: number;
+
+  @ApiModelPropertyOptional()
+  @IsOptional()
+  @IsString()
+  barcode: string;
 
   @ApiModelPropertyOptional()
   @IsNumber()

@@ -19,6 +19,21 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
     super(productRepository);
   }
 
+  getProductByBarcode(barcode: string) {
+    return this.productRepository.findOne({
+      where: { barcode },
+      select: ['id', 'price', 'barcode', 'name'],
+      relations: [
+        'producer',
+        'category',
+        'photos',
+        'unit_of_measure',
+        'characteristics',
+        'characteristics.type',
+      ],
+    });
+  }
+
   getProductById(id: number): Promise<Product> {
     return this.productRepository.findOne(id, {
       select: ['id', 'price', 'barcode', 'name'],

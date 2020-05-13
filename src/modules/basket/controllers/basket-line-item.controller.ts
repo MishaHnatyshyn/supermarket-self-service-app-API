@@ -5,6 +5,7 @@ import AddToBasketDto from '../dto/add-to-basket.dto';
 import LineItemDto from '../dto/line-item.dto';
 import IdDto from '../../../shared/dto/id.dto';
 import UpdateQuantityDto from '../dto/update-quantity.dto';
+import BothProductIdAndBarcodeMissingException from '../exceptions/both-productId-and-barcode-missing.exception';
 
 @ApiUseTags('basket-items')
 @Controller('basket-items')
@@ -14,15 +15,19 @@ export default class BasketLineItemController {
   @ApiCreatedResponse({ type: LineItemDto })
   @Post()
   createBasketLineItem(
-    @Body() { basketId, productId, quantity }: AddToBasketDto,
+    @Body() { basketId, productId, quantity, barcode }: AddToBasketDto,
   ): Promise<LineItemDto> {
-    return this.basketService.createBasketLineItem(basketId, productId, quantity);
+    if (!basketId && !barcode) {
+      throw new BothProductIdAndBarcodeMissingException();
+    }
+    return this.basketService.createBasketLineItem(basketId, productId, quantity, barcode);
   }
 
   @ApiOkResponse({ type: LineItemDto })
   @Put(':id')
   updateLineItemQuantity(
-    @Param() { id }: IdDto, @Body() { quantity }: UpdateQuantityDto,
+    @Param() { id }: IdDto,
+      @Body() { quantity }: UpdateQuantityDto,
   ): Promise<LineItemDto> {
     return this.basketService.updateLineItemQuantity(id, quantity);
   }

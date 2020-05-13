@@ -6,10 +6,14 @@ import LineItemDetails from '../interfaces/line-item-details.interface';
 import BasketLineItem from '../../database/entities/basket/basket-line-item.entity';
 import LineItemDto from '../dto/line-item.dto';
 import BasketDetailsDto from '../dto/basket-details.dto';
+import ProductService from '../../product/services/product.service';
 
 @Injectable()
 export default class BasketService {
-  constructor(private readonly basketRepositoryService: BasketRepositoryService) {}
+  constructor(
+    private readonly basketRepositoryService: BasketRepositoryService,
+    private readonly productService: ProductService,
+  ) {}
 
   async createNewEmptyBasket(storeId: number): Promise<EmptyBasketDto> {
     const basketEntity = await this.basketRepositoryService.createEmptyBasket(storeId);
@@ -36,10 +40,16 @@ export default class BasketService {
     basketId: number,
     productId: number,
     quantity = 1,
+    barcode: string,
   ): Promise<LineItemDto> {
+    let populatedProductId = null;
+    if (!productId && barcode) {
+      const product = await this.productService.getProductByBarcode(barcode);
+      populatedProductId = product.id;
+    }
     const lineItem: BasketLineItem = await this.basketRepositoryService.createBasketLineItem(
       basketId,
-      productId,
+      productId || populatedProductId,
       quantity,
     );
     const lineItemDetails: LineItemDetails = await this.getLineItemDetails(lineItem.id);

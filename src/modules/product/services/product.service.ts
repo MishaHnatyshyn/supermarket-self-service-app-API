@@ -16,7 +16,15 @@ export default class ProductService {
   async getProduct(id: number): Promise<ProductDto> {
     const product = await this.productRepositoryService.getProductById(id);
     if (!product) {
-      throw new ProductNotFoundException(id);
+      throw new ProductNotFoundException({ id });
+    }
+    return product;
+  }
+
+  async getProductByBarcode(barcode: string): Promise<ProductDto> {
+    const product = await this.productRepositoryService.getProductByBarcode(barcode);
+    if (!product) {
+      throw new ProductNotFoundException({ barcode });
     }
     return product;
   }
