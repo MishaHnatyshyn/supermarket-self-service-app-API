@@ -1,8 +1,8 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
+import NotFoundException from '../../../shared/not-found.exception';
 
-export default class ProductNotFoundException extends HttpException {
+export default class ProductNotFoundException extends NotFoundException {
   constructor({ id, barcode }: { id?: number; barcode?: string }) {
     const queryType = id ? 'id' : 'barcode';
-    super(`Product with ${queryType} "${id || barcode}" does't exist.`, HttpStatus.NOT_FOUND);
+    super({ resource: 'Product', queryType, queryValue: id || barcode});
   }
 }

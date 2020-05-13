@@ -4,8 +4,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  BaseEntity,
+  BaseEntity, OneToMany,
 } from 'typeorm';
+import PaymentMethod from '../payment/paymentMethod.entity';
 
 @Entity()
 export default class User extends BaseEntity {
@@ -17,6 +18,12 @@ export default class User extends BaseEntity {
 
   @Column({ length: 500, nullable: false, select: false })
   password: string;
+
+  @Column({ nullable: true })
+  name: string;
+
+  @OneToMany(() => PaymentMethod, payment => payment.user)
+  paymentMethods: PaymentMethod[];
 
   @CreateDateColumn()
   created_at: string;

@@ -30,4 +30,11 @@ export default class UserRepositoryService extends BaseRepositoryService<User> {
   getUserByEmail(email): Promise<User> {
     return this.findOne({ email });
   }
+
+  getDetails(id: number): Promise<User> {
+    return this.userRepository.findOne(id, {
+      select: ['id', 'name', 'email'],
+      relations: ['paymentMethods'],
+    });
+  }
 }
