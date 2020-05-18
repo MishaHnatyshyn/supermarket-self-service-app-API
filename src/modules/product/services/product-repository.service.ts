@@ -82,7 +82,9 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
         'MIN("product"."price") OVER() as "min_price"',
         'MAX("product"."price") OVER() as "max_price"',
       ])
-      .where('LOWER("product"."name") LIKE :searchTerm', { searchTerm: `%${searchTerm}%` });
+      .where('LOWER("product"."name") LIKE :searchTerm', { searchTerm: `%${searchTerm}%` })
+      .orWhere('LOWER("category"."name") LIKE :searchTerm', { searchTerm: `%${searchTerm}%` })
+    ;
 
     const formattedFilters = ProductRepositoryService.formFilters(filters);
     let queryWithFilters = baseQuery;
