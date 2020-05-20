@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { DeleteResult, In, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import BaseRepositoryService from '../../../shared/base-repository.service';
 import { BASKET_LINE_ITEM_REPOSITORY, BASKET_REPOSITORY } from '../../../constants';
 import Basket from '../../database/entities/basket/basket.entity';
@@ -21,8 +21,9 @@ export default class BasketRepositoryService extends BaseRepositoryService<Baske
     super(basketRepository);
   }
 
-  createEmptyBasket(storeId): Promise<Basket> {
+  createEmptyBasket(storeId, userId): Promise<Basket> {
     const basket = new Basket();
+    basket.user_id = userId;
     basket.store_id = storeId;
     basket.status = BasketStatus.IN_PROGRESS;
     return this.basketRepository.save(basket);
@@ -42,13 +43,13 @@ export default class BasketRepositoryService extends BaseRepositoryService<Baske
 
   getBasketLineItemsPrices(
     basketId: number,
-  ): Promise<{ id: number; quantity: number; total_product_price: number }[]> {
+  ): Promise<{ id: number; quantity: number; price: number }[]> {
     return this.basketLineItemRepository
       .createQueryBuilder('item')
       .select([
         'item.id as id',
         'item.quantity as quantity',
-        'product.price * item.quantity as total_product_price',
+        'product.price as price',
       ])
       .where({ basket_id: basketId })
       .innerJoin(Product, 'product', 'product.id=item.product_id')
@@ -92,5 +93,10 @@ export default class BasketRepositoryService extends BaseRepositoryService<Baske
 
   deleteLineItem(id): Promise<DeleteResult> {
     return this.basketLineItemRepository.delete(id);
+  }
+
+  async getBasketStoreId(basketId: number): Promise<number> {
+    const basket = await this.basketRepository.findOne(basketId, { select: ['store_id']});
+    return basket.store_id;
   }
 }

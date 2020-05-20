@@ -16,7 +16,14 @@ export default class StoreRepositoryService extends BaseRepositoryService<Store>
 
   getAll(): Promise<StoreDto[]> {
     return this.storeRepository.find({
-      relations: ['address', 'address.coordinates'],
+      relations: ['address', 'address.country', 'address.country.country', 'address.coordinates'],
+    });
+  }
+
+  getNameAndAddress(id: number): Promise<Store> {
+    return this.storeRepository.findOne(id, {
+      select: ['name', 'id', 'address'],
+      relations: ['address', 'address.country', 'address.country.country'],
     });
   }
 }

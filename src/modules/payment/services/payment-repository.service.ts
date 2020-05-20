@@ -21,4 +21,13 @@ export default class PaymentRepositoryService extends BaseRepositoryService<Paym
     return this.paymentMethodRepository.save(paymentMethod);
   }
 
+  getOne(id: number, userId: number): Promise<PaymentMethod> {
+    return this.paymentMethodRepository.findOne({
+      where: {
+        id,
+        user_id: userId,
+      },
+      select: ['id', 'card_type', 'card_number'],
+    });
+  }
 }

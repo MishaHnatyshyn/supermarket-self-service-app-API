@@ -13,6 +13,7 @@ import StoreService from './services/store.service';
     StoreRepositoryService,
     StoreService,
   ],
+  exports: [StoreService],
 })
 
 export default class StoreModule {}

@@ -1,5 +1,5 @@
 import { ApiResponseModelProperty } from '@nestjs/swagger';
-import PaymentMethodDto from './paymentMethod.dto';
+import PaymentMethodDto from '../../payment/dto/paymentMethod.dto';
 
 export default class UserDto {
   @ApiResponseModelProperty()

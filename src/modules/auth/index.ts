@@ -7,6 +7,7 @@ import AuthController from './auth.controller';
 import UserModule from '../user';
 import AuthService from './services/auth.service';
 import CryptoService from './services/crypto.service';
+import OptionalStrategy from './strategies/optional.strategy';
 
 @Module({
   controllers: [AuthController],
@@ -22,6 +23,7 @@ import CryptoService from './services/crypto.service';
     AuthService,
     LocalStrategy,
     UserStrategy,
+    OptionalStrategy,
     CryptoService,
   ],
 })

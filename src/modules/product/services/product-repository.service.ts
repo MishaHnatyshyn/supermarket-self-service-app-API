@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import {In, Like, Repository, MoreThanOrEqual, LessThanOrEqual, Between} from 'typeorm';
+import {In, Repository, MoreThanOrEqual, LessThanOrEqual, Between} from 'typeorm';
 import BaseRepositoryService from '../../../shared/base-repository.service';
 import {PRODUCT_CHARACTERISTIC_REPOSITORY, PRODUCT_REPOSITORY} from '../../../constants';
 import Product from '../../database/entities/product/product.entity';
@@ -19,9 +19,9 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
     super(productRepository);
   }
 
-  getProductByBarcode(barcode: string) {
+  private getProductBase(matcher: object): Promise<Product> {
     return this.productRepository.findOne({
-      where: { barcode },
+      where: matcher,
       select: ['id', 'price', 'barcode', 'name'],
       relations: [
         'producer',
@@ -34,18 +34,14 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
     });
   }
 
+  getProductByBarcode(barcode: string): Promise<Product>  {
+    const matcher = { barcode };
+    return this.getProductBase(matcher);
+  }
+
   getProductById(id: number): Promise<Product> {
-    return this.productRepository.findOne(id, {
-      select: ['id', 'price', 'barcode', 'name'],
-      relations: [
-        'producer',
-        'category',
-        'photos',
-        'unit_of_measure',
-        'characteristics',
-        'characteristics.type',
-      ],
-    });
+    const matcher = { id };
+    return this.getProductBase(matcher);
   }
 
   getProductsCharacteristics(products: number[]): Promise<ProductCharacteristicDbResponse[]> {
@@ -83,8 +79,7 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
         'MAX("product"."price") OVER() as "max_price"',
       ])
       .where('LOWER("product"."name") LIKE :searchTerm', { searchTerm: `%${searchTerm}%` })
-      .orWhere('LOWER("category"."name") LIKE :searchTerm', { searchTerm: `%${searchTerm}%` })
-    ;
+      .orWhere('LOWER("category"."name") LIKE :searchTerm', { searchTerm: `%${searchTerm}%` });
 
     const formattedFilters = ProductRepositoryService.formFilters(filters);
     let queryWithFilters = baseQuery;

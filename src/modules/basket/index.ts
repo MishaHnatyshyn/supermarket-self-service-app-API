@@ -21,7 +21,7 @@ import ProductModule from '../product';
     BasketController,
     BasketLineItemController,
   ],
-  exports: [],
+  exports: [BasketService],
 })
 
 export default class BasketModule {}

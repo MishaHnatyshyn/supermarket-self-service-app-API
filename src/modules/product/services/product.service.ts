@@ -3,7 +3,6 @@ import ProductRepositoryService from './product-repository.service';
 import ProductNotFoundException from '../exceptions/product-not-found.exception';
 import ProductDto from '../dto/product.dto';
 import SearchQueryDto from '../dto/search-query.dto';
-import Range from '../interfaces/rage.interface';
 import SearchHelperService from './search-helper.service';
 import ProductSearchDto from '../dto/product-search.dto';
 

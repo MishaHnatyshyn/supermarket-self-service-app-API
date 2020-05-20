@@ -15,8 +15,8 @@ export default class BasketService {
     private readonly productService: ProductService,
   ) {}
 
-  async createNewEmptyBasket(storeId: number): Promise<EmptyBasketDto> {
-    const basketEntity = await this.basketRepositoryService.createEmptyBasket(storeId);
+  async createNewEmptyBasket(storeId: number, userId: number = null): Promise<EmptyBasketDto> {
+    const basketEntity = await this.basketRepositoryService.createEmptyBasket(storeId, userId);
     const { created_at, id, ...rest } = basketEntity;
     const basketResponseData: EmptyBasketDto = { id, createdAt: created_at };
     return basketResponseData;
@@ -25,7 +25,7 @@ export default class BasketService {
   async getBasketTotals(basketId: number): Promise<BasketTotals> {
     const productsPrices = await this.basketRepositoryService.getBasketLineItemsPrices(basketId);
     const { sum, items } = productsPrices.reduce((acc, curr) => {
-      acc.sum += + curr.total_product_price;
+      acc.sum += curr.price * curr.quantity;
       acc.items += + curr.quantity;
       return acc;
     }, { sum: 0, items: 0 });
@@ -93,10 +93,13 @@ export default class BasketService {
 
   async getBasketDetails(basketId: number): Promise<BasketDetailsDto> {
     const lineItems = await this.basketRepositoryService.getBasketLineItemsDetails(basketId);
+    const storeId = await this.basketRepositoryService.getBasketStoreId(basketId);
     const totals = await this.getBasketTotals(basketId);
     return {
+      id: basketId,
       data: lineItems,
       totals,
+      storeId,
     };
   }
 }
