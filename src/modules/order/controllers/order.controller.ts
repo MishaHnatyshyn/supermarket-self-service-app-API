@@ -40,6 +40,7 @@ export default class OrderController {
     return this.orderService.getOrderDetails(id, user?.id);
   }
 
+  @ApiOkResponse({ type: OrderListDto })
   @UseGuards(OptionalJwtAuthGuard)
   @Get()
   getOrdersList(
