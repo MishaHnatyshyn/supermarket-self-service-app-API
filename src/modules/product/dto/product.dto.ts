@@ -17,20 +17,20 @@ export default class ProductDto {
   barcode: string;
 
   @ApiResponseModelProperty()
-  producer: Producer;
+  producer?: Producer;
 
   @ApiResponseModelProperty()
   currency: Currency;
 
   @ApiResponseModelProperty()
-  category: Category;
+  category?: Category;
 
   @ApiResponseModelProperty()
-  unit_of_measure: UnitOfMeasure;
+  unit_of_measure?: UnitOfMeasure;
 
   @ApiResponseModelProperty()
-  characteristics: ProductCharacteristic[];
+  characteristics?: ProductCharacteristic[];
 
   @ApiResponseModelProperty()
-  photos: ProductPhoto[];
+  photos?: ProductPhoto[];
 }

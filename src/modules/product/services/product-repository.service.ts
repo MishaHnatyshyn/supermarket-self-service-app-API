@@ -7,6 +7,7 @@ import ProductCharacteristic from '../../database/entities/product-characteristi
 import ProductCharacteristicType from '../../database/entities/product-characteristic/product-characteristic-type.entity';
 import ProductSearchDbResponse from '../interfaces/product-search-db-response.interface';
 import ProductCharacteristicDbResponse from '../interfaces/product-characteristic-db-response.interface';
+import ProductShortDto from '../dto/product-short.dto';
 
 @Injectable()
 export default class ProductRepositoryService extends BaseRepositoryService<Product> {
@@ -34,13 +35,29 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
     });
   }
 
-  getProductByBarcode(barcode: string): Promise<Product>  {
-    const matcher = { barcode };
-    return this.getProductBase(matcher);
+  getProductByBarcodeForDisplay(barcode: string): Promise<ProductShortDto>  {
+    return this.productRepository
+      .createQueryBuilder('product')
+      .select([
+        '"product"."id" AS "id"',
+        '"product"."name" AS "name"',
+        '"product"."barcode" AS "barcode"',
+        '"product"."price" AS "price"',
+        '"photo"."url" AS "photo"',
+        '"currency"."code" AS "currency_code"',
+      ])
+      .where({ barcode })
+      .leftJoin('currency', 'currency', '"currency"."id"="product"."currency_id"')
+      .leftJoin('product_photo', 'photo', '"photo"."product_id"="product"."id" AND "photo"."is_main"=TRUE')
+      .getRawOne();
   }
 
   getProductById(id: number): Promise<Product> {
     const matcher = { id };
+    return this.getProductBase(matcher);
+  }
+  getProductByBarcode(barcode: string): Promise<Product> {
+    const matcher = { barcode };
     return this.getProductBase(matcher);
   }
 

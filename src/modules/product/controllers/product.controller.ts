@@ -8,6 +8,7 @@ import IdDto from '../../../shared/dto/id.dto';
 import SearchQueryParamsPipe from '../../../shared/search-query-params.pipe';
 import SearchQueryDto from '../dto/search-query.dto';
 import ProductSearchDto from '../dto/product-search.dto';
+import ProductBarcodeDto from '../dto/product-barcode.dto';
 
 @ApiUseTags('products')
 @Controller('products')
@@ -18,6 +19,12 @@ export default class ProductController {
   @Get(':id')
   getProduct(@Param() { id }: IdDto): Promise<ProductDto> {
     return this.productService.getProduct(id);
+  }
+
+  @ApiOkResponse({ type: ProductDto })
+  @Get('barcode/:barcode')
+  getProductByBarcode(@Param() { barcode }: ProductBarcodeDto): Promise<ProductDto> {
+    return this.productService.getProductByBarcode(barcode, true);
   }
 
   @ApiOkResponse({ type: ProductSearchDto })

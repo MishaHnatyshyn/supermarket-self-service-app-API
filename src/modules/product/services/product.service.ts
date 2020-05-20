@@ -5,6 +5,7 @@ import ProductDto from '../dto/product.dto';
 import SearchQueryDto from '../dto/search-query.dto';
 import SearchHelperService from './search-helper.service';
 import ProductSearchDto from '../dto/product-search.dto';
+import ProductShortDto from '../dto/product-short.dto';
 
 @Injectable()
 export default class ProductService {
@@ -20,8 +21,10 @@ export default class ProductService {
     return product;
   }
 
-  async getProductByBarcode(barcode: string): Promise<ProductDto> {
-    const product = await this.productRepositoryService.getProductByBarcode(barcode);
+  async getProductByBarcode(barcode: string, short = false): Promise<ProductDto | ProductShortDto> {
+    const product = short
+      ? await this.productRepositoryService.getProductByBarcodeForDisplay(barcode)
+      : await this.productRepositoryService.getProductByBarcode(barcode);
     if (!product) {
       throw new ProductNotFoundException({ barcode });
     }
