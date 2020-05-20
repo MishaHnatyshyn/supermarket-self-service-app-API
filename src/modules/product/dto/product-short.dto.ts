@@ -9,7 +9,7 @@ export default class ProductShortDto {
   name: string;
 
   @ApiResponseModelProperty()
-  description: string;
+  description?: string;
 
   @ApiResponseModelProperty()
   barcode: string;
@@ -18,8 +18,8 @@ export default class ProductShortDto {
   currency: Currency;
 
   @ApiResponseModelProperty()
-  photo: string;
+  photo?: string;
 
   @ApiResponseModelProperty()
-  price: number;
+  price?: number;
 }
