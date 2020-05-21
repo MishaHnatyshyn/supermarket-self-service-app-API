@@ -23,7 +23,7 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
   private getProductBase(matcher: object): Promise<Product> {
     return this.productRepository.findOne({
       where: matcher,
-      select: ['id', 'price', 'barcode', 'name'],
+      select: ['id', 'price', 'barcode', 'name', 'description'],
       relations: [
         'producer',
         'category',
