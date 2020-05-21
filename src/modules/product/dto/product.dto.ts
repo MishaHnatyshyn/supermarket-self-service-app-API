@@ -17,6 +17,9 @@ export default class ProductDto {
   barcode: string;
 
   @ApiResponseModelProperty()
+  description: string;
+
+  @ApiResponseModelProperty()
   producer?: Producer;
 
   @ApiResponseModelProperty()

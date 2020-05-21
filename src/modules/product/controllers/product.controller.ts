@@ -9,7 +9,7 @@ import SearchQueryParamsPipe from '../../../shared/search-query-params.pipe';
 import SearchQueryDto from '../dto/search-query.dto';
 import ProductSearchDto from '../dto/product-search.dto';
 import ProductBarcodeDto from '../dto/product-barcode.dto';
-import ProductShortDto from "../dto/product-short.dto";
+import ProductShortDto from '../dto/product-short.dto';
 
 @ApiUseTags('products')
 @Controller('products')
