@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import BasketService from '../../basket/services/basket.service';
 import OrderRepositoryService from './order-repository.service';
 import TransactionRepositoryService from './transaction-repository.service';
@@ -114,12 +114,14 @@ export default class OrderService {
     return this.orderRepositoryService.delete({ id: orderId, user_id: userId });
   }
 
-  async getOrdersList(ids: number[] = [], userId: number = null): Promise<OrderListDto> {
+  async getOrdersList(ids: number[], userId: number = null): Promise<OrderListDto> {
     let data;
     if (userId) {
       data = await this.orderRepositoryService.getOrdersListByUserId(userId);
-    } else {
+    } else if (ids) {
       data = await this.orderRepositoryService.getOrdersListByIdsList(ids);
+    } else {
+      throw new BadRequestException();
     }
     return { data };
   }
