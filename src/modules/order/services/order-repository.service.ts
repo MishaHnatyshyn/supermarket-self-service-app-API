@@ -29,7 +29,7 @@ export default class OrderRepositoryService extends BaseRepositoryService<Order>
 
   getOrder(orderId: number): Promise<Order> {
     return this.orderRepository.findOne(orderId, {
-      select: ['id', 'created_at', 'basket_id', 'user_id'],
+      select: ['id', 'created_at', 'basket_id', 'user_id', 'status'],
     });
   }
 
