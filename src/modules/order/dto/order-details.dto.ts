@@ -17,5 +17,8 @@ export default class OrderDetailsDto {
   timestamp: string;
 
   @ApiResponseModelProperty()
+  status: string;
+
+  @ApiResponseModelProperty()
   id: number;
 }

@@ -104,6 +104,7 @@ export default class OrderService {
     return {
       id: order.id,
       products: basket,
+      status: order.status,
       timestamp: order.created_at,
       paymentDetails: formedPaymentDetails,
       store,
