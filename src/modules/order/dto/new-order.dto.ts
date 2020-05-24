@@ -1,4 +1,5 @@
 import { ApiResponseModelProperty } from '@nestjs/swagger';
+import PaymentMethodDto from '../../payment/dto/paymentMethod.dto';
 
 export default class NewOrderDto {
   @ApiResponseModelProperty()
@@ -15,5 +16,8 @@ export default class NewOrderDto {
 
   @ApiResponseModelProperty()
   timestamp: string;
+
+  @ApiResponseModelProperty()
+  paymentMethodData: PaymentMethodDto;
 }
 

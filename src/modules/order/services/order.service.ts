@@ -39,7 +39,7 @@ export default class OrderService {
       paymentMethodData = this.paymentService.formatPaymentData(paymentData);
       rawPaymentData = `${paymentMethodData.maskedCardNumber},${paymentMethodData.cardType}`;
     } else if (paymentData && saveNewPaymentMethod && userId) {
-      paymentMethodData = this.paymentService.addPaymentMethod(paymentData, userId);
+      paymentMethodData = await this.paymentService.addPaymentMethod(paymentData, userId);
       rawPaymentData = null;
     }
     return { paymentMethodData, rawPaymentData };
@@ -73,6 +73,7 @@ export default class OrderService {
       id: order.id,
       transactionId: transaction.id,
       sum: totalOrderSum,
+      paymentMethodData: saveNewPaymentMethod ? paymentMethodData : null,
     };
   }
 
