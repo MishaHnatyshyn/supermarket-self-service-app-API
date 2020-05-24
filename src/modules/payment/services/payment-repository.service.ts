@@ -30,4 +30,10 @@ export default class PaymentRepositoryService extends BaseRepositoryService<Paym
       select: ['id', 'card_type', 'card_number'],
     });
   }
+
+  deletePaymentMethod(id): Promise<object>  {
+    return this.paymentMethodRepository.update(id, {
+      user_id: null,
+    });
+  }
 }

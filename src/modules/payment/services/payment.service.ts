@@ -57,7 +57,7 @@ export default class PaymentService {
   }
 
   deletePaymentMethod(id: number): Promise<object> {
-    return this.paymentRepositoryService.delete({ id });
+    return this.paymentRepositoryService.deletePaymentMethod(id);
   }
 
   getPaymentMethod(id: number, userId: number): Promise<PaymentMethodDto> {

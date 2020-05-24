@@ -15,7 +15,7 @@ export default class PaymentMethod extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   user_id: number;
 
   @ManyToOne(() => User)
