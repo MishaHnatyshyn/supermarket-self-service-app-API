@@ -117,6 +117,7 @@ export default class ProductRepositoryService extends BaseRepositoryService<Prod
       .leftJoin('producer', 'producer', '"producer"."id"="product"."producer_id"')
       .leftJoin('product_photo', 'photo', '"photo"."product_id"="product"."id" AND "photo"."is_main"=TRUE')
       .leftJoin('unit_of_measure', 'unit_of_measure', '"unit_of_measure"."id"="product"."unit_of_measure_id"')
+      .orderBy('product.id')
       .limit(pageSize)
       .offset(skip)
       .getRawMany();
